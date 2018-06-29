@@ -1,15 +1,44 @@
 //create cards
+var cards = ['fa-diamond', 'fa-diamond',
+                'fa-paper-plane-o', 'fa-paper-plane-o',
+                'fa-achor', 'fa-anchor',
+                'fa-bolt', 'fa-bolt',
+                'fa-cube', 'fa-cube',
+                'fa-leaf', 'fa-leaf',
+                'fa-bicycle', 'fa-bicycle',
+                'fa-bomb', 'fa-bomb',
+              ];
 
+  //add loop over card li & push to array
+/*  for (var i=1; i < card.length; i++) {
+    cards.push(card[i].innerHTML);
+  }
+  $('card').text(cards.join(''));
+  return cards;*/
+
+function cardArray(card) {
+  return '<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>';
+}
 //create gameboard
+function gameboard() {
 
+}
 //Flip cards
+function flip() {
 
-//adjust stars with move count 
+}
+//adjust stars with move count
+function moves() {
 
+}
 //match cards
+function matchCards() {
 
+}
 //game over
+function endGame() {
 
+}
 
 /*
  * Create a list that holds all of your cards
