@@ -1,4 +1,4 @@
-//create cards
+//create array of card values
 var cards = ['fa-diamond', 'fa-diamond',
                 'fa-paper-plane-o', 'fa-paper-plane-o',
                 'fa-achor', 'fa-anchor',
@@ -8,21 +8,21 @@ var cards = ['fa-diamond', 'fa-diamond',
                 'fa-bicycle', 'fa-bicycle',
                 'fa-bomb', 'fa-bomb',
               ];
-
-  //add loop over card li & push to array
-/*  for (var i=1; i < card.length; i++) {
-    cards.push(card[i].innerHTML);
-  }
-  $('card').text(cards.join(''));
-  return cards;*/
-
+//create card from array values
 function cardArray(card) {
-  return '<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>';
+  return '<li class="card"><i class="fa ${card}"></i></li>';
 }
-//create gameboard
+//function to create gameboard
 function gameboard() {
-
+  var deck = document.querySelector('.deck');
+  var cardHTML = cards.map(function(card) {
+    return cardArray(card);
+  });
+  deck.innerHTML = cardHTML.join('');
 }
+//call the gameboard function to show the cards
+gameboard();
+
 //Flip cards
 function flip() {
 
