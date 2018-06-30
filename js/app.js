@@ -1,16 +1,17 @@
 //create array of card values
-var cards = ['fa-diamond', 'fa-diamond',
-                'fa-paper-plane-o', 'fa-paper-plane-o',
-                'fa-achor', 'fa-anchor',
-                'fa-bolt', 'fa-bolt',
-                'fa-cube', 'fa-cube',
-                'fa-leaf', 'fa-leaf',
-                'fa-bicycle', 'fa-bicycle',
-                'fa-bomb', 'fa-bomb',
-              ];
+var cards = [
+              'fa-diamond', 'fa-diamond',
+              'fa-paper-plane-o', 'fa-paper-plane-o',
+              'fa-anchor', 'fa-anchor',
+              'fa-bolt', 'fa-bolt',
+              'fa-cube', 'fa-cube',
+              'fa-leaf', 'fa-leaf',
+              'fa-bicycle', 'fa-bicycle',
+              'fa-bomb', 'fa-bomb',
+            ];
 //create card from array values
 function cardArray(card) {
-  return '<li class="card"><i class="fa ${card}"></i></li>';
+  return `<li class="card"><i class="fa ${card}"></i></li>`;
 }
 //function to create gameboard
 function gameboard() {
@@ -24,9 +25,18 @@ function gameboard() {
 gameboard();
 
 //Flip cards
-function flip() {
+var allCards = document.querySelectorAll('.card');
+var openCards = [];
 
-}
+allCards.forEach(function flip(card) {
+  card.addEventListener('click', function(evt) {
+    if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
+      openCards.push(card);
+      card.classList.add('open', 'show');
+    }
+  });
+});
+
 //adjust stars with move count
 function moves() {
 
@@ -40,9 +50,7 @@ function endGame() {
 
 }
 
-/*
- * Create a list that holds all of your cards
- */
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
