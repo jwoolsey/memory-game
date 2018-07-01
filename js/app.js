@@ -9,17 +9,22 @@ var cards = [
               'fa-bicycle', 'fa-bicycle',
               'fa-bomb', 'fa-bomb',
             ];
+
+//Call shuffle to reorder the array
+shuffle(cards);
+
 //create card from array values
-function cardArray(card) {
+function cardList(card) {
   return `<li class="card"><i class="fa ${card}"></i></li>`;
 }
 //function to create gameboard
 function gameboard() {
   var deck = document.querySelector('.deck');
   var cardHTML = cards.map(function(card) {
-    return cardArray(card);
+    return cardList(card);
   });
   deck.innerHTML = cardHTML.join('');
+  return deck;
 }
 //call the gameboard function to show the cards
 gameboard();
@@ -72,6 +77,7 @@ function shuffle(array) {
 
     return array;
 }
+
 
 
 /*
