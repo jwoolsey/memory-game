@@ -42,26 +42,31 @@ allCards.forEach(function flip(card) {
   });
 });
 
-//adjust stars with move count
+//adjust stars and move count
 function moves() {
-
+//span class 'moves'
 }
 //match cards
 function matchCards() {
 
 }
+
+//restart
+function refresh(card) {
+  var restart = document.querySelector('.fa-repeat');
+  restart.addEventListener('click', function(e) {
+    allCards.forEach(function(card) {
+      card.classList.remove('open', 'show', 'match');
+    });
+    openCards = [];
+  });
+}
+refresh();
+
 //game over
 function endGame() {
 
 }
-
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
