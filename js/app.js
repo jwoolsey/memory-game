@@ -35,7 +35,7 @@ var openCards = [];
 
 allCards.forEach(function flip(card) {
   card.addEventListener('click', function(evt) {
-
+    moves();
     if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
       openCards.push(card);
       card.classList.add('open', 'show');
@@ -43,7 +43,7 @@ allCards.forEach(function flip(card) {
   });
 });
 
-//adjust stars and move count
+//Set initial moves to zero and adjust move count
 var moveCount = 0;
 document.querySelector('.moves').textContent = moveCount;
 
@@ -51,16 +51,24 @@ function moves() {
     moveCount++;
     var moveText = document.querySelector('.moves');
     moveText.innerHTML = moveCount;
+    return moveCount
 }
-var numStar = 3;
 
-//span class 'moves'
+function starRating(moveCount) {
+  if (moveCount >= 12) {
+    $('#thirdStar').css('display', 'none');
+  } else if (moveCount === 24) {
+    $('#secondStar').css('display', 'none');
+  }
+}
+starRating();
+
 //ul class 'stars'
 //fa.fa-star
 
 //match cards
 function matchCards() {
-  moves();
+
 }
 
 //restart
