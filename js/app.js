@@ -35,6 +35,7 @@ var openCards = [];
 
 allCards.forEach(function flip(card) {
   card.addEventListener('click', function(evt) {
+
     if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
       openCards.push(card);
       card.classList.add('open', 'show');
@@ -43,12 +44,23 @@ allCards.forEach(function flip(card) {
 });
 
 //adjust stars and move count
+var moveCount = 0;
+document.querySelector('.moves').textContent = moveCount;
+
 function moves() {
-//span class 'moves'
+    moveCount++;
+    var moveText = document.querySelector('.moves');
+    moveText.innerHTML = moveCount;
 }
+var numStar = 3;
+
+//span class 'moves'
+//ul class 'stars'
+//fa.fa-star
+
 //match cards
 function matchCards() {
-
+  moves();
 }
 
 //restart
@@ -65,7 +77,7 @@ refresh();
 
 //game over
 function endGame() {
-
+//add modal
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
