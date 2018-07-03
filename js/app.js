@@ -36,6 +36,7 @@ var openCards = [];
 allCards.forEach(function flip(card) {
   card.addEventListener('click', function(evt) {
     moves();
+    starRating(moveCount);
     if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
       openCards.push(card);
       card.classList.add('open', 'show');
@@ -55,16 +56,13 @@ function moves() {
 }
 
 function starRating(moveCount) {
-  if (moveCount >= 12) {
-    $('#thirdStar').css('display', 'none');
-  } else if (moveCount === 24) {
-    $('#secondStar').css('display', 'none');
+  if (moveCount === 24) {
+    //hide the third star after 12 moves
+    $('#thirdStar').hide();
+  } else if (moveCount === 12) {
+    $('#secondStar').hide();
   }
 }
-starRating();
-
-//ul class 'stars'
-//fa.fa-star
 
 //match cards
 function matchCards() {
