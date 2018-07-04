@@ -57,12 +57,32 @@ function moves() {
 
 function starRating(moveCount) {
   if (moveCount === 24) {
-    //hide the third star after 12 moves
+    //hide the third star after 24 moves
     $('#thirdStar').hide();
+    //hide second star after 12 moves
   } else if (moveCount === 12) {
     $('#secondStar').hide();
   }
 }
+
+var totalSeconds = -1;
+
+function startTimer() {
+  setInterval(function gameTimer() {
+    totalSeconds++;
+    //calculate minutes from seconds
+    var minute = Math.floor(totalSeconds/60);
+    if (minute < 10) {
+      minute = '0' + minute; //add leading '0' if less than 10 minutes
+    }
+    var seconds = totalSeconds - (minute*60);
+    if (seconds < 10) {
+      seconds = '0' + seconds; //add leading '0' if less than 10 seconds
+    }
+    document.getElementById('timer').innerHTML = minute + ":" + seconds;
+  }, 1000);
+}
+startTimer();
 
 //match cards
 function matchCards() {
