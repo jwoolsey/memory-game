@@ -65,7 +65,7 @@ function starRating(moveCount) {
   }
 }
 
-var totalSeconds = -1;
+var totalSeconds = 0; //sets initial timer to 00:00
 
 function startTimer() {
   setInterval(function gameTimer() {
@@ -80,7 +80,7 @@ function startTimer() {
       seconds = '0' + seconds; //add leading '0' if less than 10 seconds
     }
     document.getElementById('timer').innerHTML = minute + ":" + seconds;
-  }, 1000);
+  }, 1000);//interval = 1 second, timer appears after one second at count 00:01
 }
 startTimer();
 
@@ -101,10 +101,32 @@ function refresh(card) {
 }
 refresh();
 
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
 //game over
 function endGame() {
-//add modal
+//display modal
+  modal.style.display = "block";
 }
+endGame();
+
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
