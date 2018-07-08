@@ -17,6 +17,7 @@ shuffle(cards);
 function cardList(card) {
   return `<li class="card"><i class="fa ${card}"></i></li>`;
 }
+
 //function to create gameboard
 function gameboard() {
   var deck = document.querySelector('.deck');
@@ -35,14 +36,19 @@ var openCards = [];
 
 allCards.forEach(function flip(card) {
   card.addEventListener('click', function(evt) {
-    moves();
-    starRating(moveCount);
-    if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
+
+    if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match') && openCards.length < 2) {
       openCards.push(card);
       card.classList.add('open', 'show');
     }
   });
 });
+
+if (openCards.length === 1) {
+  matchCards();
+  moves();
+  starRating(moveCount);
+}
 
 //Set initial moves to zero and adjust move count
 var moveCount = 0;
@@ -85,9 +91,27 @@ function startTimer() {
 startTimer();
 
 //match cards
-function matchCards() {
+var matched = 0;
 
+function matchCards(openCards) {
+  if (openCards[0].firstElementChild.className===openCards[1].firstElementChild.className) {
+    openCards.forEach(function(card) {
+      openCards.push(card);
+      card.classList.add('match');
+      matched += 2;
+      if (matched === 16) {
+        endGame();
+      }
+    });
+  } else {
+      openCards.forEach(function(card) {
+      card.classList.remove('open');
+      card.classList.remove('show');
+      });
+    }
+  openCards = [];
 }
+
 
 //restart
 function refresh(card) {
@@ -124,9 +148,6 @@ function endGame() {
 //display modal
   modal.style.display = "block";
 }
-endGame();
-
-
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
