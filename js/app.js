@@ -96,7 +96,6 @@ var matched = 0;
 function matchCards(openCards) {
   if (openCards[0].firstElementChild.className===openCards[1].firstElementChild.className) {
     openCards.forEach(function(card) {
-      openCards.push(card);
       card.classList.add('match');
       matched += 2;
       if (matched === 16) {
