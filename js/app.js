@@ -44,22 +44,19 @@ allCards.forEach(function flip(card) {
   });
 });
 
-if (openCards.length === 1) {
-  matchCards();
-  moves();
-  starRating(moveCount);
-}
+
 
 //Set initial moves to zero and adjust move count
 var moveCount = 0;
 document.querySelector('.moves').textContent = moveCount;
 
-function moves() {
+function moves(moveCount) {
     moveCount++;
     var moveText = document.querySelector('.moves');
     moveText.innerHTML = moveCount;
     return moveCount
 }
+moves(moveCount);
 
 function starRating(moveCount) {
   if (moveCount === 24) {
@@ -70,6 +67,7 @@ function starRating(moveCount) {
     $('#secondStar').hide();
   }
 }
+starRating(moveCount);
 
 var totalSeconds = 0; //sets initial timer to 00:00
 
@@ -94,23 +92,38 @@ startTimer();
 var matched = 0;
 
 function matchCards(openCards) {
-  if (openCards[0].firstElementChild.className===openCards[1].firstElementChild.className) {
-    openCards.forEach(function(card) {
-      card.classList.add('match');
-      matched += 2;
-      if (matched === 16) {
-        endGame();
-      }
-    });
+  if (
+    openCards[0].firstElementChild.className ===
+    openCards[1].firstElementChild.className
+  ) {
+    openCards.forEach(setMatch(card));
+    console.log('match cards true');
   } else {
-      openCards.forEach(function(card) {
-      card.classList.remove('open');
-      card.classList.remove('show');
-      });
-    }
+    //setTimeout(function() {
+    openCards.forEach(closeCard(card));
+    console.log('match cards false');
+    }//, 1000);
+  //}
   openCards = [];
 }
 
+function setMatch(card) {
+  card.classList.add('match');
+    matched += 2;
+    if (matched === 16) {
+      endGame();
+    }
+    console.log('set match');
+}
+
+function closeCard(card) {
+  card.classList.remove('open', 'show');
+  console.log('close card');
+}
+
+if (openCards.length === 2) {
+  matchCards(openCards);
+}
 
 //restart
 function refresh(card) {
