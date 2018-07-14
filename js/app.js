@@ -18,9 +18,10 @@ function cardList(card) {
   return `<li class="card"><i class="fa ${card}"></i></li>`;
 }
 
+var deck = document.querySelector('.deck');
+
 //function to create gameboard
 function gameboard() {
-  var deck = document.querySelector('.deck');
   var cardHTML = cards.map(function(card) {
     return cardList(card);
   });
@@ -30,21 +31,39 @@ function gameboard() {
 //call the gameboard function to show the cards
 gameboard();
 
-//Flip cards
-var allCards = document.querySelectorAll('.card');
+//initialize open card array
 var openCards = [];
 
-allCards.forEach(function flip(card) {
-  card.addEventListener('click', function(evt) {
-
-    if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match') && openCards.length < 2) {
-      openCards.push(card);
-      card.classList.add('open', 'show');
+//Add event listener for card clicks
+deck.addEventListener('click', evt => {
+  var clicked = evt.target;
+  if (clicked.classList.contains('card') &&
+      /*!clicked.classList.contains('open') &&
+      !clicked.classList.contains('show') &&
+      !clicked.classList.contains('match') &&*/
+      openCards.length < 2) {
+    console.log('card clicked');
+    flip(clicked);
+    addOpen(clicked);
+    if (openCards.length === 2) {
+      console.log('going to match function');
+      matchCards(clicked);
     }
-  });
+  }
 });
 
+//add clicked 'open' card to array
+function addOpen(clicked) {
+  console.log('card pushed');
+  openCards.push(clicked);
+}
 
+//Toggle 'open' and 'show' class on click
+function flip(clicked) {
+  console.log('flip function');
+  clicked.classList.toggle('open');
+  clicked.classList.toggle('show');
+}
 
 //Set initial moves to zero and adjust move count
 var moveCount = 0;
@@ -91,38 +110,39 @@ startTimer();
 //match cards
 var matched = 0;
 
-function matchCards(openCards) {
+function matchCards(clicked, closed) {
+  console.log('Match Function');
   if (
     openCards[0].firstElementChild.className ===
     openCards[1].firstElementChild.className
   ) {
-    openCards.forEach(setMatch(card));
     console.log('match cards true');
+    setMatch(openCards);
   } else {
-    //setTimeout(function() {
-    openCards.forEach(closeCard(card));
     console.log('match cards false');
-    }//, 1000);
-  //}
+    setTimeout(closeCard(openCards), 1000);
+    }
+  console.log('clearing open array');
   openCards = [];
 }
 
-function setMatch(card) {
-  card.classList.add('match');
+function setMatch(openCards) {
+  console.log('set match');
+  openCards[1].classList.toggle('match');
+  openCards[0].classList.toggle('match');
     matched += 2;
     if (matched === 16) {
+      console.log('end game');
       endGame();
     }
-    console.log('set match');
 }
 
-function closeCard(card) {
-  card.classList.remove('open', 'show');
+function closeCard(openCards) {
   console.log('close card');
-}
-
-if (openCards.length === 2) {
-  matchCards(openCards);
+  openCards[1].classList.toggle('open');
+  openCards[1].classList.toggle('show');
+  openCards[0].classList.toggle('open');
+  openCards[0].classList.toggle('show');
 }
 
 //restart
