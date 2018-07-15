@@ -48,6 +48,8 @@ deck.addEventListener('click', evt => {
     if (openCards.length === 2) {
       console.log('going to match function');
       matchCards(clicked);
+      moves();
+      starRating(moveCount);
     }
   }
 });
@@ -66,16 +68,13 @@ function flip(clicked) {
 }
 
 //Set initial moves to zero and adjust move count
-var moveCount = 0;
-document.querySelector('.moves').textContent = moveCount;
+let moveCount = 0;
 
-function moves(moveCount) {
-    moveCount++;
-    var moveText = document.querySelector('.moves');
-    moveText.innerHTML = moveCount;
-    return moveCount
+function moves() {
+  moveCount++;
+  const moveText = document.querySelector('.moves');
+  moveText.innerHTML = moveCount;
 }
-moves(moveCount);
 
 function starRating(moveCount) {
   if (moveCount === 24) {
@@ -86,7 +85,6 @@ function starRating(moveCount) {
     $('#secondStar').hide();
   }
 }
-starRating(moveCount);
 
 var totalSeconds = 0; //sets initial timer to 00:00
 
@@ -110,35 +108,30 @@ startTimer();
 //match cards
 var matched = 0;
 
-function matchCards(clicked, closed) {
-  console.log('Match Function');
+function matchCards(clicked) {
   if (
     openCards[0].firstElementChild.className ===
     openCards[1].firstElementChild.className
   ) {
-    console.log('match cards true');
     setMatch(openCards);
   } else {
-    console.log('match cards false');
     setTimeout(function() {
       closeCard(openCards);
     }, 1000);//delays calling closeCard so you can see the flipped card
   }
-  console.log('clearing open array');
   setTimeout(function() {
     openCards = [];
-  }, 1002);//resets 2 milliseconds after the closeCard function is called
+  }, 1001);//resets 1 milliseconds after the closeCard function is called
 }
 
+//Adds 'match' class to open cards
 function setMatch(openCards) {
-  console.log('set match');
   openCards[1].classList.toggle('match');
   openCards[0].classList.toggle('match');
-    matched += 2;
-    if (matched === 16) {
-      console.log('end game');
-      endGame();
-    }
+  matched += 2;
+  if (matched === 16) {
+    endGame();
+  }
 }
 
 //loop through open cards and remove 'open' & 'show' class
@@ -149,9 +142,8 @@ function closeCard(openCards) {
   }
 }
 
-//restart
+//Click event listener on restart button resets deck to 'card' class only
 $(".fa-repeat").click(function refresh() {
-  console.log('refreshing');
   const matchedCards = document.querySelectorAll('.deck li');
   for (let match of matchedCards) {
     match.className = 'card';
