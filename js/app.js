@@ -37,16 +37,10 @@ var openCards = [];
 //Add event listener for card clicks
 deck.addEventListener('click', evt => {
   var clicked = evt.target;
-  if (clicked.classList.contains('card') &&
-      /*!clicked.classList.contains('open') &&
-      !clicked.classList.contains('show') &&
-      !clicked.classList.contains('match') &&*/
-      openCards.length < 2) {
-    console.log('card clicked');
+  if (clicked.classList.contains('card') && openCards.length < 2) {
     flip(clicked);
     addOpen(clicked);
     if (openCards.length === 2) {
-      console.log('going to match function');
       matchCards(clicked);
       moves();
       starRating(moveCount);
@@ -88,7 +82,7 @@ function starRating(moveCount) {
 
 var totalSeconds = 0; //sets initial timer to 00:00
 
-function startTimer() {
+$('.deck').one('click', function startTimer() {
   setInterval(function gameTimer() {
     totalSeconds++;
     //calculate minutes from seconds
@@ -102,8 +96,7 @@ function startTimer() {
     }
     document.getElementById('timer').innerHTML = minute + ":" + seconds;
   }, 1000);//interval = 1 second, timer appears after one second at count 00:01
-}
-startTimer();
+});
 
 //match cards
 var matched = 0;
