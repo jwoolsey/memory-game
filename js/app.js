@@ -141,12 +141,12 @@ function setMatch(openCards) {
     }
 }
 
+//loop through open cards and remove 'open' & 'show' class
 function closeCard(openCards) {
-  console.log('close card');
-  openCards[1].classList.toggle('open');
-  openCards[1].classList.toggle('show');
-  openCards[0].classList.toggle('open');
-  openCards[0].classList.toggle('show');
+  for (let open of openCards) {
+    open.classList.toggle('open');
+    open.classList.toggle('show');
+  }
 }
 
 //restart
