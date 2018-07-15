@@ -120,10 +120,14 @@ function matchCards(clicked, closed) {
     setMatch(openCards);
   } else {
     console.log('match cards false');
-    setTimeout(closeCard(openCards), 1000);
-    }
+    setTimeout(function() {
+      closeCard(openCards);
+    }, 1000);//delays calling closeCard so you can see the flipped card
+  }
   console.log('clearing open array');
-  openCards = [];
+  setTimeout(function() {
+    openCards = [];
+  }, 1002);//resets 2 milliseconds after the closeCard function is called
 }
 
 function setMatch(openCards) {
@@ -146,16 +150,13 @@ function closeCard(openCards) {
 }
 
 //restart
-function refresh(card) {
-  var restart = document.querySelector('.fa-repeat');
-  restart.addEventListener('click', function(e) {
-    allCards.forEach(function(card) {
-      card.classList.remove('open', 'show', 'match');
-    });
-    openCards = [];
-  });
-}
-refresh();
+$(".fa-repeat").click(function refresh() {
+  console.log('refreshing');
+  const matchedCards = document.querySelectorAll('.deck li');
+  for (let match of matchedCards) {
+    match.className = 'card';
+  }
+});
 
 // Get the modal
 var modal = document.getElementById('myModal');
