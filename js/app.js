@@ -37,7 +37,7 @@ var openCards = [];
 //Add event listener for card clicks to initiate showing symbol and add to open card list
 deck.addEventListener('click', evt => {
   var clicked = evt.target;
-  if (clicked.classList.contains('card') && openCards.length < 2) {
+  if (clicked.classList.contains('card') && !clicked.classList.contains('match') && openCards.length < 2) {
     flip(clicked);
     addOpen(clicked);
     if (openCards.length === 2) {
@@ -66,6 +66,7 @@ function moves() {
   moveCount++;
   const moveText = document.querySelector('.moves');
   moveText.innerHTML = moveCount;
+  return moveCount;
 }
 
 function starRating(moveCount) {
@@ -78,10 +79,11 @@ function starRating(moveCount) {
   }
 }
 
-var totalSeconds = 0; //sets initial timer to 00:00
+let totalSeconds = 0; //sets initial timer to 00:00
+let gameTimer;
 
 $('.deck').one('click', function startTimer() {
-  setInterval(function gameTimer() {
+  gameTimer = setInterval(() => {
     totalSeconds++;
     //calculate minutes from seconds
     var minute = Math.floor(totalSeconds/60);
@@ -95,6 +97,11 @@ $('.deck').one('click', function startTimer() {
     document.getElementById('timer').innerHTML = minute + ":" + seconds;
   }, 1000);//interval = 1 second, timer appears after one second at count 00:01
 });
+// TODO: add clock stop function on endGame & reset timer on refresh
+
+function stopClock() {
+  clearInterval(gameTimer);
+}
 
 //match cards
 var matched = 0;
@@ -140,6 +147,8 @@ $(".fa-repeat").click(function() {
 
 //resets deck to 'card' class only
 function refresh() {
+  totalSeconds = 0;
+  moveCount = 0;
   const matchedCards = document.querySelectorAll('.deck li');
   for (let match of matchedCards) {
     match.className = 'card';
@@ -198,8 +207,10 @@ function getStars() {
 //game over
 function endGame() {
   //display modal
-  modal.style.display = 'block';
+  stopClock();
   writeStats();
+  modal.style.display = 'block';
+
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
