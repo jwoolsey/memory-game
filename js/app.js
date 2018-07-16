@@ -69,13 +69,17 @@ function moves() {
   return moveCount;
 }
 
+let starCount = 3;
+
 function starRating(moveCount) {
   if (moveCount === 24) {
     //hide the third star after 24 moves
     $('#thirdStar').hide();
+    starCount = 1;
     //hide second star after 12 moves
   } else if (moveCount === 12) {
     $('#secondStar').hide();
+    starCount = 2;
   }
 }
 
@@ -181,27 +185,14 @@ document.querySelector('.modalReplay').addEventListener('click', () => {
 
 //Add stats to the Modal
 function writeStats() {
-  console.log('write stats to modal');
   const timeStat = document.querySelector('.modalTime');
-  const timerClock = document.querySelector('.timer').innerHTML;
+  const timerClock = document.getElementById('timer').innerHTML;
   const moveStat = document.querySelector('.modalMoves');
   const starStat = document.querySelector('.modalStars');
-  const stars = getStars();
 
   timeStat.innerHTML = `Time = ${timerClock}`;
   moveStat.innerHTML = `Moves = ${moveCount}`;
-  starStat.innerHTML = `Stars = ${stars}`;
-}
-
-function getStars() {
-  stars = document.querySelectorAll('.stars li');
-  starCount = 0;
-  for (star of stars) {
-    if (star.style.display !== 'none') {
-      starCount++;
-    }
-  }
-  return starCount;
+  starStat.innerHTML = `Stars = ${starCount}`;
 }
 
 //game over
