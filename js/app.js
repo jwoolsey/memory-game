@@ -34,7 +34,7 @@ gameboard();
 //initialize open card array
 var openCards = [];
 
-//Add event listener for card clicks
+//Add event listener for card clicks to initiate showing symbol and add to open card list
 deck.addEventListener('click', evt => {
   var clicked = evt.target;
   if (clicked.classList.contains('card') && openCards.length < 2) {
@@ -50,13 +50,11 @@ deck.addEventListener('click', evt => {
 
 //add clicked 'open' card to array
 function addOpen(clicked) {
-  console.log('card pushed');
   openCards.push(clicked);
 }
 
 //Toggle 'open' and 'show' class on click
 function flip(clicked) {
-  console.log('flip function');
   clicked.classList.toggle('open');
   clicked.classList.toggle('show');
 }
@@ -135,36 +133,73 @@ function closeCard(openCards) {
   }
 }
 
-//Click event listener on restart button resets deck to 'card' class only
-$(".fa-repeat").click(function refresh() {
+//Click event listener on restart button calls refresh
+$(".fa-repeat").click(function() {
+  refresh();
+});
+
+//resets deck to 'card' class only
+function refresh() {
   const matchedCards = document.querySelectorAll('.deck li');
   for (let match of matchedCards) {
     match.className = 'card';
   }
-});
+}
 
 // Get the modal
-var modal = document.getElementById('myModal');
+const modal = document.getElementById('myModal');
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+const span = document.getElementsByClassName('close')[0];
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
-    modal.style.display = "none";
+    modal.style.display = 'none';
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal) {
-        modal.style.display = "none";
+        modal.style.display = 'none';
     }
+}
+
+//Add event listener for modal button to call refresh and close modal
+document.querySelector('.modalReplay').addEventListener('click', () => {
+  refresh();
+  modal.style.display = 'none';
+});
+
+//Add stats to the Modal
+function writeStats() {
+  console.log('write stats to modal');
+  const timeStat = document.querySelector('.modalTime');
+  const timerClock = document.querySelector('.timer').innerHTML;
+  const moveStat = document.querySelector('.modalMoves');
+  const starStat = document.querySelector('.modalStars');
+  const stars = getStars();
+
+  timeStat.innerHTML = `Time = ${timerClock}`;
+  moveStat.innerHTML = `Moves = ${moveCount}`;
+  starStat.innerHTML = `Stars = ${stars}`;
+}
+
+function getStars() {
+  stars = document.querySelectorAll('.stars li');
+  starCount = 0;
+  for (star of stars) {
+    if (star.style.display !== 'none') {
+      starCount++;
+    }
+  }
+  return starCount;
 }
 
 //game over
 function endGame() {
-//display modal
-  modal.style.display = "block";
+  //display modal
+  modal.style.display = 'block';
+  writeStats();
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -181,16 +216,3 @@ function shuffle(array) {
 
     return array;
 }
-
-
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
