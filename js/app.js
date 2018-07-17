@@ -1,9 +1,9 @@
-window.onload = function() {
-  init();
+window.onload = function () {
+  initial();
 }
 
 //initialize game
-function init() {
+function initial() {
   //Call shuffle to reorder the array of cards
   shuffle(cards);
   //call the gameboard function to show the cards
@@ -17,7 +17,7 @@ function init() {
 */
 
 //create array of card values
-var cards = [
+let cards = [
               'fa-diamond', 'fa-diamond',
               'fa-paper-plane-o', 'fa-paper-plane-o',
               'fa-anchor', 'fa-anchor',
@@ -28,13 +28,12 @@ var cards = [
               'fa-bomb', 'fa-bomb',
             ];
 
-var deck = document.querySelector('.deck');
-var openCards = []; //initialize open card array
-var moveCount = 0; //Initial move count
-var starCount = 3; //initial star rating
-var totalSeconds = 0; //sets initial timer to 00:00
-var gameTimer;
-var matched = 0; //match cards
+const deck = document.querySelector('.deck');
+let openCards = []; //initialize open card array
+let moveCount = 0; //Initial move count
+let starCount = 3; //initial star rating
+let totalSeconds = 0; //sets initial timer to 00:00
+let matched = 0; //match cards
 
 /*
 * Functions for Game Play
@@ -47,7 +46,7 @@ function cardList(card) {
 
 //function to create gameboard
 function gameboard() {
-  var cardHTML = cards.map(function(card) {
+  const cardHTML = cards.map(function(card) {
     return cardList(card);
   });
   deck.innerHTML = cardHTML.join('');
@@ -56,7 +55,7 @@ function gameboard() {
 
 //Add event listener for card clicks to initiate showing symbol and add to open card list
 deck.addEventListener('click', evt => {
-  var clicked = evt.target;
+  let clicked = evt.target;
   if (clicked.classList.contains('card') && !clicked.classList.contains('match') && openCards.length < 2) {
     flip(clicked);
     addOpen(clicked);
@@ -193,7 +192,7 @@ function refresh() {
   }
   matched = 0;
 
-  init();
+  initial();
 }
 
 // Get the modal
@@ -223,7 +222,7 @@ document.querySelector('.modalReplay').addEventListener('click', () => {
 //Add stats to the Modal
 function writeStats() {
   const timeStat = document.querySelector('.modalTime');
-  const timerClock = document.getElementById('timer').innerHTML;
+  let timerClock = document.getElementById('timer').innerHTML;
   const moveStat = document.querySelector('.modalMoves');
   const starStat = document.querySelector('.modalStars');
 
@@ -242,7 +241,7 @@ function endGame() {
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
